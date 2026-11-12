@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Café La Cumbre — Café de altura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f5efe4;
+    --ink: #2a1d16;
+    --forest: #1f3a2e;
+    --accent: #b5562f;
+    --muted: #6b5a4e;
+    --line: #e2d7c5;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Geist", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.6; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.nav { position: absolute; inset: 0 0 auto 0; z-index: 10; color: var(--bg); }
+  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 1.25rem; }
+  .brand { font-family: var(--serif); font-weight: 700; font-size: 1.25rem; letter-spacing: .01em; text-decoration: none; display: flex; align-items: center; gap: .5rem; }
+  .brand svg { width: 26px; height: 26px; }
+  nav ul { display: none; list-style: none; gap: 2rem; font-size: .9rem; }
+  nav a { text-decoration: none; opacity: .9; }
+  nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+  @media (min-width: 760px) { nav ul { display: flex; } }
+
+  .hero { position: relative; min-height: 92vh; display: flex; align-items: flex-end; color: var(--bg); overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,30,24,.45) 0%, rgba(20,30,24,.15) 40%, rgba(20,30,24,.85) 100%); }
+  .hero .wrap { position: relative; z-index: 1; padding-bottom: 4rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .75rem; font-weight: 600; }
+  .hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.6rem, 8vw, 5.5rem); line-height: 1.02; margin: .75rem 0 1.25rem; max-width: 14ch; text-wrap: balance; }
+  .hero p { max-width: 46ch; font-size: 1.05rem; opacity: .92; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.4rem; border-radius: 999px; font-weight: 600; font-size: .95rem; text-decoration: none; border: 1px solid transparent; transition: transform .15s, background .15s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #9c4625; }
+  .btn-ghost { border-color: rgba(245,239,228,.6); color: var(--bg); }
+  .btn-ghost:hover { background: rgba(245,239,228,.12); }
+
+  section { padding: 5.5rem 0; }
+  .section-head { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 3rem; max-width: 52ch; }
+  .section-head .eyebrow { color: var(--accent); }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.1; text-wrap: balance; }
+  .lead { color: var(--muted); font-size: 1.05rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
+  .stat { padding: 1.75rem 1rem; text-align: center; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat strong { display: block; font-family: var(--serif); font-size: clamp(1.6rem, 4vw, 2.4rem); color: var(--forest); }
+  .stat span { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+
+  .story { display: grid; gap: 3rem; align-items: center; }
+  .story img { border-radius: 1rem; aspect-ratio: 4/5; object-fit: cover; width: 100%; }
+  .story p + p { margin-top: 1rem; }
+  .story ul { list-style: none; margin-top: 2rem; display: grid; gap: 1rem; }
+  .story li { display: flex; gap: .9rem; align-items: flex-start; }
+  .story li svg { flex: none; width: 22px; height: 22px; color: var(--accent); margin-top: 2px; }
+  @media (min-width: 860px) { .story { grid-template-columns: 1fr 1.1fr; gap: 4.5rem; } }
+
+  .menu { background: var(--forest); color: var(--bg); }
+  .menu .section-head .eyebrow { color: #e8a37f; }
+  .menu .lead { color: rgba(245,239,228,.75); }
+  .tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+  .tab { font: inherit; font-size: .9rem; font-weight: 600; padding: .55rem 1.1rem; border-radius: 999px; border: 1px solid rgba(245,239,228,.35); background: transparent; color: var(--bg); cursor: pointer; }
+  .tab[aria-selected="true"] { background: var(--bg); color: var(--forest); border-color: var(--bg); }
+  .tab:focus-visible, .btn:focus-visible { outline: 2px solid #e8a37f; outline-offset: 3px; }
+  .menu-list { display: grid; gap: 0 3rem; }
+  @media (min-width: 760px) { .menu-list { grid-template-columns: 1fr 1fr; } }
+  .item { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid rgba(245,239,228,.15); }
+  .item h3 { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; }
+  .item p { font-size: .9rem; color: rgba(245,239,228,.7); }
+  .price { font-family: var(--serif); font-size: 1.1rem; white-space: nowrap; color: #e8a37f; }
+  [role="tabpanel"][hidden] { display: none; }
+
+  .origins { display: grid; gap: 1.25rem; }
+  @media (min-width: 760px) { .origins { grid-template-columns: repeat(3, 1fr); } }
+  .card { background: #fffaf1; border: 1px solid var(--line); border-radius: 1rem; padding: 1.75rem; display: flex; flex-direction: column; gap: .75rem; }
+  .card .tag { align-self: flex-start; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--forest); background: #e4ebe3; padding: .3rem .65rem; border-radius: 999px; }
+  .card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; }
+  .card p { color: var(--muted); font-size: .95rem; }
+  .card dl { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; font-size: .85rem; margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--line); }
+  .card dt { color: var(--muted); }
+  .card dd { font-weight: 600; text-align: right; }
+
+  .visit { display: grid; gap: 2.5rem; align-items: stretch; }
+  @media (min-width: 860px) { .visit { grid-template-columns: 1.2fr 1fr; } }
+  .visit img { border-radius: 1rem; width: 100%; height: 100%; min-height: 280px; object-fit: cover; }
+  .info { display: grid; gap: 1.75rem; align-content: center; }
+  .info h3 { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+  .hours { display: grid; grid-template-columns: 1fr auto; gap: .3rem 1.5rem; max-width: 320px; }
+  .hours dd { font-weight: 600; }
+  .open-now { display: inline-flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 600; margin-top: .6rem; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .open-now.is-open .dot { background: #3f8f5a; box-shadow: 0 0 0 4px rgba(63,143,90,.18); }
+
+  footer { background: var(--ink); color: rgba(245,239,228,.75); padding: 3rem 0; font-size: .9rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; align-items: center; }
+  footer .brand { color: var(--bg); }
+  footer ul { display: flex; gap: 1.5rem; list-style: none; }
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a href="#" class="brand" aria-label="Café La Cumbre, inicio">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M2 26 12 10l5 8 4-5 9 13H2Z" fill="currentColor"/><circle cx="23" cy="7" r="3" fill="#e8a37f"/></svg>
+        La Cumbre
+      </a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#menu">Menú</a></li>
+          <li><a href="#origenes">Orígenes</a></li>
+          <li><a href="#visitanos">Visítanos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img src="./img/hero.png" alt="Cafetales en terrazas sobre montañas andinas al amanecer" />
+      <div class="wrap">
+        <p class="eyebrow">Tostadores de café de altura · Desde 1998</p>
+        <h1 id="hero-title">El café que nace en la cima.</h1>
+        <p>Granos cultivados a más de 1.800 metros, tostados en pequeños lotes y servidos con el cuidado de quienes conocen cada finca por su nombre.</p>
+        <div class="actions">
+          <a href="#menu" class="btn btn-primary">Ver el menú</a>
+          <a href="#visitanos" class="btn btn-ghost">Cómo llegar</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="stats" role="list">
+        <div class="stat" role="listitem"><strong>1.850 m</strong><span>Altitud media</span></div>
+        <div class="stat" role="listitem"><strong>12</strong><span>Fincas aliadas</span></div>
+        <div class="stat" role="listitem"><strong>86+</strong><span>Puntaje SCA</span></div>
+      </div>
+    </div>
+
+    <section id="historia">
+      <div class="wrap story">
+        <img src="./img/cup.png" alt="Taza de café filtrado junto a granos tostados sobre mesa de madera" />
+        <div>
+          <div class="section-head">
+            <p class="eyebrow">Nuestra historia</p>
+            <h2>Subir la montaña para encontrar mejor café.</h2>
+          </div>
+          <p class="lead">La Cumbre empezó como un pequeño tostador familiar en el pueblo. Hoy trabajamos directamente con productores de montaña, pagando precios justos y apostando por procesos que respetan la tierra.</p>
+          <p class="lead">Cada taza cuenta la historia de una ladera, un clima y una familia.</p>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><strong>Comercio directo.</strong> Compramos sin intermediarios a fincas que visitamos cada cosecha.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><strong>Tueste semanal.</strong> Lotes pequeños para que el café llegue fresco a tu taza.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><strong>Hecho a mano.</strong> Panadería y repostería horneadas cada mañana en casa.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="menu">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Menú</p>
+          <h2>Para cada momento del día.</h2>
+          <p class="lead">Leche vegetal sin costo adicional. Pregunta por el lote de origen de la semana.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Categorías del menú">
+          <button class="tab" role="tab" id="tab-espresso" aria-controls="panel-espresso" aria-selected="true">Espresso</button>
+          <button class="tab" role="tab" id="tab-filtrado" aria-controls="panel-filtrado" aria-selected="false" tabindex="-1">Filtrados</button>
+          <button class="tab" role="tab" id="tab-frios" aria-controls="panel-frios" aria-selected="false" tabindex="-1">Fríos</button>
+          <button class="tab" role="tab" id="tab-horno" aria-controls="panel-horno" aria-selected="false" tabindex="-1">Del horno</button>
+        </div>
+
+        <div role="tabpanel" id="panel-espresso" aria-labelledby="tab-espresso" class="menu-list">
+          <div class="item"><div><h3>Espresso</h3><p>Doble, blend La Cumbre</p></div><span class="price">$2.50</span></div>
+          <div class="item"><div><h3>Cortado</h3><p>Espresso con un toque de leche</p></div><span class="price">$3.00</span></div>
+          <div class="item"><div><h3>Cappuccino</h3><p>Espuma sedosa, 6 oz</p></div><span class="price">$3.80</span></div>
+          <div class="item"><div><h3>Latte de panela</h3><p>Endulzado con panela y canela</p></div><span class="price">$4.50</span></div>
+          <div class="item"><div><h3>Flat white</h3><p>Doble ristretto, leche texturizada</p></div><span class="price">$4.00</span></div>
+          <div class="item"><div><h3>Mocha de cacao</h3><p>Cacao de origen al 70%</p></div><span class="price">$4.80</span></div>
+        </div>
+        <div role="tabpanel" id="panel-filtrado" aria-labelledby="tab-filtrado" class="menu-list" hidden>
+          <div class="item"><div><h3>V60</h3><p>Lote de origen de la semana</p></div><span class="price">$4.50</span></div>
+          <div class="item"><div><h3>Chemex para dos</h3><p>Limpio y brillante, 500 ml</p></div><span class="price">$8.00</span></div>
+          <div class="item"><div><h3>Prensa francesa</h3><p>Cuerpo intenso, notas a chocolate</p></div><span class="price">$4.00</span></div>
+          <div class="item"><div><h3>Vuelo de catación</h3><p>Tres orígenes lado a lado</p></div><span class="price">$9.00</span></div>
+        </div>
+        <div role="tabpanel" id="panel-frios" aria-labelledby="tab-frios" class="menu-list" hidden>
+          <div class="item"><div><h3>Cold brew</h3><p>Infusión en frío por 18 horas</p></div><span class="price">$4.20</span></div>
+          <div class="item"><div><h3>Tónica espresso</h3><p>Agua tónica, cítricos y espresso</p></div><span class="price">$4.80</span></div>
+          <div class="item"><div><h3>Latte frío</h3><p>Con hielo y leche entera</p></div><span class="price">$4.30</span></div>
+          <div class="item"><div><h3>Cascara fizz</h3><p>Té de cereza de café con soda</p></div><span class="price">$4.00</span></div>
+        </div>
+        <div role="tabpanel" id="panel-horno" aria-labelledby="tab-horno" class="menu-list" hidden>
+          <div class="item"><div><h3>Pan de bono</h3><p>Recién horneado, queso campesino</p></div><span class="price">$2.20</span></div>
+          <div class="item"><div><h3>Croissant de mantequilla</h3><p>Laminado en casa</p></div><span class="price">$3.20</span></div>
+          <div class="item"><div><h3>Torta de café</h3><p>Con glaseado de cold brew</p></div><span class="price">$3.80</span></div>
+          <div class="item"><div><h3>Arepa rellena</h3><p>Queso, aguacate y hogao</p></div><span class="price">$5.50</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="origenes">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Orígenes</p>
+          <h2>Tres fincas, tres carácteres.</h2>
+          <p class="lead">Disponibles en grano o molido para llevar a casa, en bolsas de 250 g y 1 kg.</p>
+        </div>
+        <div class="origins">
+          <article class="card">
+            <span class="tag">Lavado</span>
+            <h3>Finca El Mirador</h3>
+            <p>Dulce y equilibrado, con notas de panela, naranja y chocolate con leche.</p>
+            <dl><dt>Altitud</dt><dd>1.750 m</dd><dt>Variedad</dt><dd>Caturra</dd><dt>250 g</dt><dd>$14</dd></dl>
+          </article>
+          <article class="card">
+            <span class="tag">Honey</span>
+            <h3>Alto de las Nubes</h3>
+            <p>Cuerpo sedoso con notas de durazno, miel de caña y almendra tostada.</p>
+            <dl><dt>Altitud</dt><dd>1.920 m</dd><dt>Variedad</dt><dd>Castillo</dd><dt>250 g</dt><dd>$16</dd></dl>
+          </article>
+          <article class="card">
+            <span class="tag">Natural</span>
+            <h3>Cerro Pico Blanco</h3>
+            <p>Expresivo y frutal: fresa, vino tinto y cacao. Nuestro lote más especial.</p>
+            <dl><dt>Altitud</dt><dd>2.100 m</dd><dt>Variedad</dt><dd>Geisha</dd><dt>250 g</dt><dd>$24</dd></dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="visitanos" style="padding-top:0">
+      <div class="wrap visit">
+        <img src="./img/interior.png" alt="Interior cálido de la cafetería con barra de madera y barista sirviendo un latte" />
+        <div class="info">
+          <div class="section-head" style="margin-bottom:0">
+            <p class="eyebrow">Visítanos</p>
+            <h2>Una pausa en lo alto.</h2>
+          </div>
+          <div>
+            <h3>Dirección</h3>
+            <address style="font-style:normal">Calle del Mirador 42, Centro<br />Plaza principal, frente a la iglesia</address>
+          </div>
+          <div>
+            <h3>Horario</h3>
+            <dl class="hours">
+              <dt>Lunes a viernes</dt><dd>7:00 – 19:00</dd>
+              <dt>Sábado</dt><dd>8:00 – 20:00</dd>
+              <dt>Domingo</dt><dd>8:00 – 14:00</dd>
+            </dl>
+            <p class="open-now" id="open-now" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="open-label">Consultando horario…</span></p>
+          </div>
+          <div>
+            <h3>Contacto</h3>
+            <p><a href="tel:+570000000000">+57 300 000 0000</a> · <a href="mailto:hola@cafelacumbre.co">hola@cafelacumbre.co</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <a href="#" class="brand">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M2 26 12 10l5 8 4-5 9 13H2Z" fill="currentColor"/><circle cx="23" cy="7" r="3" fill="#e8a37f"/></svg>
+        La Cumbre
+      </a>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+      </ul>
+      <p>© 2026 Café La Cumbre</p>
+    </div>
+  </footer>
+
+<script>
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function select(tab) {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    tab.focus();
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') select(tabs[(i + 1) % tabs.length]);
+      if (e.key === 'ArrowLeft') select(tabs[(i - 1 + tabs.length) % tabs.length]);
+    });
+  });
+
+  const schedule = { 0: [8, 14], 6: [8, 20] };
+  const now = new Date();
+  const [open, close] = schedule[now.getDay()] || [7, 19];
+  const h = now.getHours() + now.getMinutes() / 60;
+  const isOpen = h >= open && h < close;
+  document.getElementById('open-now').classList.toggle('is-open', isOpen);
+  document.getElementById('open-label').textContent = isOpen
+    ? `Abierto ahora · cierra a las ${close}:00`
+    : `Cerrado ahora · abrimos a las ${open}:00`;
+</script>
+</body>
+</html>
